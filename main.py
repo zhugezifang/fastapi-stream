@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from typing import List
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 # Modelo de datos con Pydantic
 class Position(BaseModel):
@@ -8,6 +9,15 @@ class Position(BaseModel):
 
 # Crear una instancia de la aplicación FastAPI
 app = FastAPI()
+# Origen permitido: '*' permite cualquier origen.
+# Si solo quieres permitir un origen específico, reemplaza '*' con el origen específico.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Puedes reemplazar "*" con el origen específico de tu aplicación Angular
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
 
 # Datos de ejemplo
 positions_data = [
